@@ -10,6 +10,19 @@ export class App extends React.Component {
     contacts: [],
     filter: '',
   };
+  
+  componentDidMount() {
+    const localContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (localContacts) {
+      this.setState({ contacts: localContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   submitForm = newContact => {
     const { contacts } = this.state;
